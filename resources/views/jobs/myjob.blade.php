@@ -42,10 +42,10 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('jobs.show', [$job->id, $job->slug]) }}">
-                                                <button class="btn btn-success btn-sm">Apply</button>
+                                                <button class="btn btn-success btn-sm">Show Info</button>
                                             </a>
                                             <a href="{{ route('job.edit', [$job->id]) }}">
-                                                <button class="btn btn-dark">Edit</button>
+                                                <button class="btn btn-dark" style="width:70 px">Edit</button>
                                         </td>
 
                                     </tr>
