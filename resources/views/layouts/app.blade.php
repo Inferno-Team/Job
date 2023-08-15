@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,19 +11,39 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script defer src="{{ asset('js/app.js') }}"  ></script>
-   
-    <script  src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script defer src="{{ asset('js/app.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
     <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Updates -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#datepicker").datepicker();
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 99,
+                values: [20, 30],
+                slide: function(event, ui) {
+                    $("#age_min").text(ui.values[0]);
+                    $("#age_max").text(ui.values[1]);
 
-
-<script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-  </script>
-
+                    $("#age_min_input").val(ui.values[0]);
+                    $("#age_max_input").val(ui.values[1]);
+                }
+            });
+        });
+    </script>
 
 
     <!-- Fonts -->
@@ -31,35 +52,34 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css" 
-     integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w==" crossorigin="anonymous" />
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-   crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
-   integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" 
-   crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 
 </head>
+
 <body>
-    
+
 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <br>
-                    <ins><h1><i>My<strong><font color="darkblue">Job</font></strong></h1></i></ins>
+                    <ins>
+                        <h1><i>My<strong>
+                                    <font color="darkblue">Job</font>
+                                </strong></h1></i>
+                    </ins>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -77,81 +97,71 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('employer.register') }}">{{ __('Employer Register') }}</a>
+                                <a class="nav-link"
+                                    href="{{ route('employer.register') }}">{{ __('Employer Register') }}</a>
                             </li>
-                            
+
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('   Job Seeker Register') }}</a>
+                                    <a class="nav-link"
+                                        href="{{ route('register') }}">{{ __('   Job Seeker Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            @if (Auth::user()->user_type == 'employer')
+                                <li>
+                                    <a href="{{ route('job.create') }}"><button class="btn btn-secondary">Post a
+                                            job</button></a>
                                 </li>
                             @endif
 
 
-                        @else
-                         @if(Auth::user()->user_type=='employer')
-
-                        <li>
-                            <a href="{{route('job.create')}}"><button class="btn btn-secondary">Post a job</button></a>
-                        </li>
-                        @endif
-
-                        
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                
-                                @if(Auth::user()->user_type=='employer')
-                                    {{Auth::user()->company->cname}}
-                                    
-                                
-                                @elseif(Auth::user()->user_type=='seeker')
-                                    {{Auth::user()->name}}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+
+                                    @if (Auth::user()->user_type == 'employer')
+                                        {{ Auth::user()->company->cname }}
+                                    @elseif(Auth::user()->user_type == 'seeker')
+                                        {{ Auth::user()->name }}
                                     @else
-                                    {{Auth::user()->name}}
-                                @endif
+                                        {{ Auth::user()->name }}
+                                    @endif
 
                                     <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                @if(Auth::user()->user_type=='employer')
-                                <a class="dropdown-item" href="{{ route('company.view') }}"
-                                       >
-                                        {{ __('Company') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{route('my.job')}}">
-                                        MyJobs
-                                    </a>
-                                      <a class="dropdown-item" href="{{route('applicant')}}">
-                                        Applicants
-                                    </a>
-                                    
+                                    @if (Auth::user()->user_type == 'employer')
+                                        <a class="dropdown-item" href="{{ route('company.view') }}">
+                                            {{ __('Company') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('my.job') }}">
+                                            MyJobs
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('applicant') }}">
+                                            Applicants
+                                        </a>
+                                    @elseif(Auth::user()->user_type == 'seeker')
+                                        <a class="dropdown-item" href="user/profile">
+                                            {{ __('Profile') }}
+                                        </a>
 
-                                @elseif(Auth::user()->user_type=='seeker')
-
-
-                                    <a class="dropdown-item" href="user/profile"
-                                       >
-                                        {{ __('Profile') }}
-                                    </a>
-
-                                      <a class="dropdown-item" href="{{route('home')}}"
-                                       >
-                                        {{ __('Saved Jobs') }}
-                                    </a>
-                                 @else   
-
-
-                                    
-                                 @endif
+                                        <a class="dropdown-item" href="{{ route('home') }}">
+                                            {{ __('Saved Jobs') }}
+                                        </a>
+                                    @else
+                                    @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -167,6 +177,5 @@
         </main>
     </div>
 </body>
+
 </html>
-
-

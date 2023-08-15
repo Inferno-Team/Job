@@ -10,6 +10,7 @@ use App\Http\Requests\JobPostRequest;
 use Auth;
 use App\Post;
 use App\Testimonial;
+use Carbon\Carbon;
 
 class JobController extends Controller
 {
@@ -28,7 +29,6 @@ class JobController extends Controller
         $companies = 0;
 
         return view('welcome', compact('jobs', 'companies', 'categories', 'posts', 'testimonial'));
-
     }
 
     public function show($id, Job $job)
@@ -110,8 +110,22 @@ class JobController extends Controller
         $applicants = Job::where('user_id', auth()->user()->id)
             ->orderBy('experience', 'asc')
             ->orderBy('gender', 'desc')
-            // ->whereBetween("age",[20,35])
-            ->get()->values();
+            ->with('users.profile')
+            ->get()->filter(function ($job) {
+                $users = $job->users;
+                $rang = [$job->age_min, $job->age_max];
+                $approvedUsers = [];
+                foreach ($users as $user) {
+                    $dob = Carbon::createFromFormat("d-m-Y", $user->profile->dob);
+                    $this_year = Carbon::now()->year;
+                    $year = $this_year - $dob->year;
+                    if ($year >= $rang[0] && $year <= $rang[1]) {
+                        $approvedUsers[] = $user;
+                    }
+                }
+                $job->users = $approvedUsers;
+                return true;
+            })->values();
         return view('jobs.applicants', compact('applicants'));
     }
 
@@ -140,9 +154,11 @@ class JobController extends Controller
             'number_of_vacancy' => request('number_of_vacancy'),
             'gender' => request('gender'),
             'experience' => request('experience'),
-            'salary' => request('salary')
-
+            'salary' => request('salary'),
+            'age_min' => request("age_min"),
+            'age_max' => request("age_max"),
         ]);
+
 
         return redirect()->back()->with('message', 'Job posted successfully');
     }
@@ -176,13 +192,11 @@ class JobController extends Controller
             return view('jobs.alljobs', compact('jobs'));
         } else if ($search) {
 
-            $jobs = Job::
-                whereHas("company", function ($query) use ($search) {
+            $jobs = Job::whereHas("company", function ($query) use ($search) {
 
-                    $query->where('cname', 'LIKE', '%' . $search . '%');
-                })
-                ->
-                OrWhere('position', 'LIKE', '%' . $search . '%')
+                $query->where('cname', 'LIKE', '%' . $search . '%');
+            })
+                ->OrWhere('position', 'LIKE', '%' . $search . '%')
 
                 ->orWhere('title', 'LIKE', '%' . $search . '%')
                 ->orWhere('type', 'LIKE', '%' . $search . '%')
@@ -224,10 +238,5 @@ class JobController extends Controller
             ->orWhere('position', 'like', '%' . $keyword . '%')
             ->limit(5)->get();
         return response()->json($users);
-
-
     }
-
-
-
 }

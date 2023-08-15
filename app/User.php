@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Profile;
 use App\Company;
 use App\Role;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -18,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','user_type'
+        'name', 'email', 'password', 'user_type'
     ];
 
     /**
@@ -39,23 +40,23 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-public function profile(){
-    return $this->hasOne(Profile::class);
-}
-
-public function company(){
-    return $this->hasOne(Company::class);
-}
-
- public function favorites(){
-        return $this->belongsToMany(Job::class,'favourites','user_id','job_id')->withTimeStamps();
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 
-public function roles(){
-    return $this->belongsToMany(Role::class);
-}
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(Job::class, 'favourites', 'user_id', 'job_id')->withTimeStamps();
+    }
 
-
-
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }
