@@ -122,6 +122,7 @@ class JobController extends Controller
                     $this_year = Carbon::now()->year;
                     $year = $this_year - $dob->year;
                     if ($year >= $rang[0] && $year <= $rang[1]) {
+                        $user->profile->age = $year;
                         $approvedUsers[] = $user;
                     }
                 }

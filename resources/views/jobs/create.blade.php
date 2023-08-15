@@ -158,7 +158,7 @@
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: baseline;">
-                                <label for="lastdate"><b>Age:</b></label>
+                                <label><b>Age:</b></label>
                                 <div style="width: 400px;display: inline-block;margin-left: 3rem">
                                     <b id="age_min"></b>
                                     <input name="age_min" type="hidden" id="age_min_input">

@@ -1,167 +1,220 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style=color:#4997D0><h4><b>Update a job</h4></b></div>
-                <div class="card-body">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header" style=color:#4997D0>
+                        <h4><b>Update a job</h4></b>
+                    </div>
+                    <div class="card-body">
 
 
-             <form action="{{route('job.update',[$job->id])}}" method="POST">@csrf       
+                        <form action="{{ route('job.update', [$job->id]) }}" method="POST">@csrf
 
-          <div class="form-group">
-              <label for="title"><b>Title:</b></label>
-              <input type="text" name="title" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" value="{{$job->title}}">
-              @if ($errors->has('title'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('title')}}</strong>
-              </span>
-              @endif
-          </div>
+                            <div class="form-group">
+                                <label for="title"><b>Title:</b></label>
+                                <input type="text" name="title"
+                                    class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}"
+                                    value="{{ $job->title }}">
+                                @if ($errors->has('title'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
-           <div class="form-group">
-              <label for="description"><b>Category:</b></label>
-              <select name="category_id" class="form-control">
-                @foreach(App\Category::all() as $cat)
-                    <option value="{{$cat->id}}" {{$cat->id==$job->category_id?'selected':''}}>{{$cat->name}}</option>
+                            <div class="form-group">
+                                <label for="description"><b>Category:</b></label>
+                                <select name="category_id" class="form-control">
+                                    @foreach (App\Category::all() as $cat)
+                                        <option value="{{ $cat->id }}"
+                                            {{ $cat->id == $job->category_id ? 'selected' : '' }}>
+                                            {{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                @endforeach
-               </select> 
-          </div>
+                            <div class="form-group">
+                                <label for="role"><b>Role:</b></label>
+                                <textarea name="roles" class="form-control {{ $errors->has('roles') ? 'is-invalid' : '' }}">{{ $job->roles }}</textarea>
+                                @if ($errors->has('roles'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('roles') }}</strong>
+                                    </span>
+                                @endif
 
-           <div class="form-group">
-              <label for="role"><b>Role:</b></label>
-              <textarea name="roles" class="form-control {{$errors->has('roles') ? 'is-invalid' : ''}}" >{{$job->roles}}</textarea>
-               @if ($errors->has('roles'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('roles')}}</strong>
-              </span>
-              @endif
+                            </div>
 
-          </div>
+                            <div class="form-group">
+                                <label for="description"><b>Description:</b></label>
+                                <textarea name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}">{{ $job->description }}</textarea>
+                                @if ($errors->has('description'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
-           <div class="form-group">
-              <label for="description"><b>Description:</b></label>
-              <textarea name="description"  class="form-control {{$errors->has('description') ? 'is-invalid' : ''}}" >{{$job->description}}</textarea>
-               @if ($errors->has('description'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('description')}}</strong>
-              </span>
-              @endif
-          </div>
+                            <div class="form-group">
+                                <label for="position"><b>Position:</b></label>
+                                <input type="text" name="position"
+                                    class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}"
+                                    value="{{ $job->position }}">
+                                @if ($errors->has('position'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('position') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
-           <div class="form-group">
-              <label for="position"><b>Position:</b></label>
-              <input type="text" name="position" class="form-control {{$errors->has('position') ? 'is-invalid' : ''}}" value="{{$job->position}}">
-               @if ($errors->has('position'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('position')}}</strong>
-              </span>
-              @endif
-          </div>
+                            <div class="form-group">
+                                <label for="address"><b>Address:</b></label>
+                                <input type="text" name="address"
+                                    class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
+                                    value="{{ $job->address }}">
+                                @if ($errors->has('position'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('position') }}</strong>
+                                    </span>
+                                @endif
 
-            <div class="form-group">
-              <label for="address"><b>Address:</b></label>
-              <input type="text" name="address"  class="form-control {{$errors->has('address') ? 'is-invalid' : ''}}" value="{{$job->address}}">
-               @if ($errors->has('position'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('position')}}</strong>
-              </span>
-              @endif
+                            </div>
 
-          </div>
-
-           <div class="form-group">
-              <label for="address"><b>No of vacancy:</b></label>
-              <input type="text" name="number_of_vacancy"  class="form-control {{$errors->has('number_of_vacancy') ? 'is-invalid' : ''}}" value="{{$job->number_of_vacancy}}">
-               @if ($errors->has('number_of_vacancy'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('number_of_vacancy')}}</strong>
-              </span>
-              @endif
-
-
-                <div class="form-group">
-              <label for="address"><b>Years of experience:</b></label>
-              <input type="text" name="experience"  class="form-control {{$errors->has('experience') ? 'is-invalid' : ''}}" value="{{$job->experience}}">
-               @if ($errors->has('experience'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('experience')}}</strong>
-              </span>
-              @endif
-
-          </div>
-              <div class="form-group">
-              <label for="type"><b>Gender:</b></label>
-               <select class="form-control" name="gender">
-                  <option value="any"{{$job->gender=='any'?'selected':''}}>any</option>
-                   <option value="male"{{$job->gender=='male'?'selected':''}}>male</option>
-                  <option value="female"{{$job->gender=='female'?'selected':''}}>female</option>
-               </select>
-          </div>
-
-              <div class="form-group">
-              <label for="type"><b>Salary:</b></label>
-               <select class="form-control" name="salary">
-                   <option value="negotiable">Negotiable</option>
-                   <option value="2000-5000">2000-5000</option>
-                   <option value="5000-10000">5000-10000</option>
-                   <option value="10000-20000">10000-20000</option>
-                    <option value="30000-500000">30000-500000</option>
-                         <option value="500000-600000">500000-500000</option>
-                              <option value="600000 plus">600000 plus</option>
-               </select>
-          </div>
-
-            <div class="form-group">
-              <label for="type"><b>Type:</b></label>
-               <select class="form-control" name="type">
-                   <option value="fulltime"{{$job->type=='fulltime'?'selected':''}}>fulltime</option>
-                   <option value="partime"{{$job->type=='partime'?'selected':''}}>partime</option>
-                  <option value="casual"{{$job->type=='casual'?'selected':''}}>casual</option>
-                  
-                  
-               </select>
-          </div>
-
-          <div class="form-group">
-              <label for="status"><b>Status:</b></label>
-               <select class="form-control" name="status">
-                   <option value="1" {{$job->status=='1'?'selected':''}}>live</option>
-                    <option value="0" {{$job->status=='0'?'selected':''}}>draft</option>              
-                     </select>
-          </div>
-
-           <div class="form-group">
-              <label for="lastdate"><b>Last date:</b></label>
-              <input type="date" name="last_date" class="form-control {{$errors->has('last_date') ? 'is-invalid' : ''}}" value="{{$job->last_date}}">
-               @if ($errors->has('last_date'))
-              <span class="invalid-feedback" role="alert">
-                <strong>{{$errors->first('last_date')}}</strong>
-              </span>
-              @endif
-
-          </div>
-
-           <div class="form-group">
-              <button type="submit" class="btn btn-success" style=background-color:#4997D0>Submit</button>
-          </div>
-
-          @if(Session::has('message'))
-          <div class="alert alert-success">
-              {{Session::get('message')}}
-          </div>
-          @endif
-
-</form>
+                            <div class="form-group">
+                                <label for="address"><b>No of vacancy:</b></label>
+                                <input type="text" name="number_of_vacancy"
+                                    class="form-control {{ $errors->has('number_of_vacancy') ? 'is-invalid' : '' }}"
+                                    value="{{ $job->number_of_vacancy }}">
+                                @if ($errors->has('number_of_vacancy'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('number_of_vacancy') }}</strong>
+                                    </span>
+                                @endif
 
 
-</div>
-</div>
+                                <div class="form-group">
+                                    <label for="address"><b>Years of experience:</b></label>
+                                    <input type="text" name="experience"
+                                        class="form-control {{ $errors->has('experience') ? 'is-invalid' : '' }}"
+                                        value="{{ $job->experience }}">
+                                    @if ($errors->has('experience'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('experience') }}</strong>
+                                        </span>
+                                    @endif
 
+                                </div>
+                                <div class="form-group">
+                                    <label for="type"><b>Gender:</b></label>
+                                    <select class="form-control" name="gender">
+                                        <option value="any"{{ $job->gender == 'any' ? 'selected' : '' }}>any</option>
+                                        <option value="male"{{ $job->gender == 'male' ? 'selected' : '' }}>male</option>
+                                        <option value="female"{{ $job->gender == 'female' ? 'selected' : '' }}>female
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="type"><b>Salary:</b></label>
+                                    <select class="form-control" name="salary">
+                                        <option value="negotiable">Negotiable</option>
+                                        <option value="2000-5000">2000-5000</option>
+                                        <option value="5000-10000">5000-10000</option>
+                                        <option value="10000-20000">10000-20000</option>
+                                        <option value="30000-500000">30000-500000</option>
+                                        <option value="500000-600000">500000-500000</option>
+                                        <option value="600000 plus">600000 plus</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="type"><b>Type:</b></label>
+                                    <select class="form-control" name="type">
+                                        <option value="fulltime"{{ $job->type == 'fulltime' ? 'selected' : '' }}>fulltime
+                                        </option>
+                                        <option value="partime"{{ $job->type == 'partime' ? 'selected' : '' }}>partime
+                                        </option>
+                                        <option value="casual"{{ $job->type == 'casual' ? 'selected' : '' }}>casual
+                                        </option>
+
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status"><b>Status:</b></label>
+                                    <select class="form-control" name="status">
+                                        <option value="1" {{ $job->status == '1' ? 'selected' : '' }}>live</option>
+                                        <option value="0" {{ $job->status == '0' ? 'selected' : '' }}>draft</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastdate"><b>Last date:</b></label>
+                                    <input type="date" name="last_date"
+                                        class="form-control {{ $errors->has('last_date') ? 'is-invalid' : '' }}"
+                                        value="{{ $job->last_date }}">
+                                    @if ($errors->has('last_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('last_date') }}</strong>
+                                        </span>
+                                    @endif
+
+                                </div>
+                                <div class="form-group" style="display: flex;align-items: baseline;">
+                                    <label><b>Age:</b></label>
+                                    <div style="width: 400px;display: inline-block;margin-left: 3rem">
+                                        <b id="age_min_edit">{{ $job->age_min }}</b>
+                                        <input name="age_min" type="hidden" id="age_min_input_edit"
+                                            value="{{ $job->age_min }}">
+                                        <div id="slider-range"
+                                            style="display: inline-block; margin-left: 10px ; margin-right: 10px; width: 300px">
+                                        </div>
+                                        <b id="age_max_edit">{{ $job->age_max }}</b>
+                                        <input name="age_max" type="hidden" id="age_max_edit_input"
+                                            value="{{ $job->age_max }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success"
+                                        style=background-color:#4997D0>Submit</button>
+                                </div>
+
+                                @if (Session::has('message'))
+                                    <div class="alert alert-success">
+                                        {{ Session::get('message') }}
+                                    </div>
+                                @endif
+
+                        </form>
+
+
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
+    <script>
+        $(function() {
+            var job = {!! json_encode($job) !!};
+            console.log(job);
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 99,
+                values: [job.age_min, job.age_max],
+                slide: function(event, ui) {
+                    $("#age_min_edit").text(ui.values[0]);
+                    $("#age_max_edit").text(ui.values[1]);
+
+                    $("#age_min_input_edit").val(ui.values[0]);
+                    $("#age_max_edit_input").val(ui.values[1]);
+                }
+            });
+        });
+    </script>
 @endsection
