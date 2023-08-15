@@ -236,10 +236,12 @@ class JobController extends Controller
         $search = $request->get('search');
         $address = $request->get('address');
         if ($search && $address) {
-            $jobs = Job::where('position', 'LIKE', '%' . $search . '%')
-                ->where('title', 'LIKE', '%' . $search . '%')
-                ->where('type', 'LIKE', '%' . $search . '%')
-                ->where('address', 'LIKE', '%' . $address . '%')
+            $jobs = Job::where('address', 'LIKE', '%' . $address . '%')
+                ->where(function ($query) use ($search) {
+                    $query->orWhere('position', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('title', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('type', 'LIKE', '%' . $search . '%');
+                })
                 ->paginate(10);
 
             return view('jobs.alljobs', compact('jobs'));
