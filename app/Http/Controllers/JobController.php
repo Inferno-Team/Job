@@ -114,8 +114,10 @@ class JobController extends Controller
             ->get()->filter(function ($job) {
                 $users = $job->users;
                 $rang = [$job->age_min, $job->age_max];
+                if (empty($job->age_min) || empty($job->age_max)) return false;
                 $approvedUsers = [];
                 foreach ($users as $user) {
+                    if (empty($user->profile->dob)) continue;
                     $dob = Carbon::createFromFormat("d-m-Y", $user->profile->dob);
                     $this_year = Carbon::now()->year;
                     $year = $this_year - $dob->year;
