@@ -85,7 +85,19 @@
 
                     <p><a href="{{ route('company.index', [$job->company->id, $job->company->slug]) }}"
                             class="btn btn-warning" style="width: 100%;">Visit Company Page</a></p>
+                    <p>
+                        @if (Auth::check() && Auth::user()->user_type == 'seeker')
+                            @if (!$job->checkApplication())
+                                <apply-component :jobid={{ $job->id }}></apply-component>
+                            @else
+                                <center><span style="color: #000;">You applied this job</span></center>
+                            @endif
 
+                        @else
+                            <b><u> Please login to apply this job</b></u>
+                        @endif
+
+                    </p>
                 </div>
                 @foreach ($jobRecommendations as $jobRecommendation)
                     <div class="card" style="width: 18rem;">
