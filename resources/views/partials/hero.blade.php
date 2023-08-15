@@ -12,14 +12,14 @@
                              <div class="row">
                                  <div class="col-md-6 mb-3 mb-md-0">
                                      <input type="text" name="search"class="mr-3 form-control border-0 px-4"
-                                         placeholder="job title, keywords or company name ">
+                                         autocomplete="off" placeholder="job title, keywords or company name ">
                                  </div>
                                  <div class="col-md-6 mb-3 mb-md-0">
                                      <div class="input-wrap">
                                          <span class="icon icon-room"></span>
                                          <input type="text" name="address"
                                              class="form-control form-control-block search-input  border-0 px-4"
-                                             placeholder="city, province or region">
+                                             autocomplete="off" placeholder="city, province or region">
                                      </div>
                                  </div>
                              </div>
