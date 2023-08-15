@@ -208,7 +208,7 @@ class JobController extends Controller
             'address' => request('address'),
             'type' => request('type'),
             'status' => request('status'),
-            'last_date' => ('last_date'),
+            'last_date' => Carbon::createFromFormat("d/m/Y",request('last_date')),
             'number_of_vacancy' => request('number_of_vacancy'),
             'gender' => request('gender'),
             'experience' => request('experience'),
