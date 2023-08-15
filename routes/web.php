@@ -32,6 +32,7 @@ Route::view('demo', 'demo');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/jobs/{id}/{job}', 'JobController@show')->name('jobs.show');
+Route::get('/jobs-all-applicants', 'JobController@showAllApplicants')->name('jobs.show_all');
 
 //company
 Route::get('/company/{id}/{company}', 'CompanyController@index')->name('company.index');

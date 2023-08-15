@@ -156,11 +156,39 @@ class JobController extends Controller
                 $job->users = $approvedUsers;
                 return true;
             })->values();
-        return view('jobs.applicants', compact('applicants'));
+        $show = false;
+        return view('jobs.applicants', compact('applicants', 'show'));
     }
 
 
 
+    public function showAllApplicants()
+    {
+        $applicants = Job::where('user_id', auth()->user()->id)
+            ->orderBy('experience', 'asc')
+            ->orderBy('gender', 'desc')
+            ->with('users.profile')
+            ->get()
+            ->filter(function ($job) {
+                // age filter
+                $users = $job->users;
+                $rang = [$job->age_min, $job->age_max];
+                if (empty($job->age_min) || empty($job->age_max)) return false;
+                $approvedUsers = [];
+                foreach ($users as $user) {
+                    if (empty($user->profile->dob)) continue;
+                    $dob = Carbon::createFromFormat("d-m-Y", $user->profile->dob);
+                    $this_year = Carbon::now()->year;
+                    $year = $this_year - $dob->year;
+                    $user->profile->age = $year;
+                    $approvedUsers[] = $user;
+                }
+                $job->users = $approvedUsers;
+                return true;
+            })->values();
+        $show = true;
+        return view('jobs.applicants', compact('applicants', 'show'));
+    }
 
 
     public function store(JobPostRequest $request)
