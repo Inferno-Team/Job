@@ -144,12 +144,8 @@
                                             Applicants
                                         </a>
                                     @elseif(Auth::user()->user_type == 'seeker')
-                                        <a class="dropdown-item" href="user/profile">
+                                        <a class="dropdown-item" href="/user/profile">
                                             {{ __('Profile') }}
-                                        </a>
-
-                                        <a class="dropdown-item" href="{{ route('home') }}">
-                                            {{ __('Saved Jobs') }}
                                         </a>
                                     @else
                                     @endif
