@@ -112,6 +112,7 @@ class JobController extends Controller
             ->orderBy('gender', 'desc')
             ->with('users.profile')
             ->get()->filter(function ($job) {
+                // age filter
                 $users = $job->users;
                 $rang = [$job->age_min, $job->age_max];
                 if (empty($job->age_min) || empty($job->age_max)) return false;
@@ -123,6 +124,32 @@ class JobController extends Controller
                     $year = $this_year - $dob->year;
                     if ($year >= $rang[0] && $year <= $rang[1]) {
                         $user->profile->age = $year;
+                        $approvedUsers[] = $user;
+                    }
+                }
+                $job->users = $approvedUsers;
+                return true;
+            })->values()->filter(function ($job) {
+                // gender filter
+                $users = $job->users;
+                $approvedUsers = [];
+                foreach ($users as $user) {
+                    if (empty($user->profile->gender)) continue;
+
+                    if ($job->gender == 'any' || $job->gender == 'Any' || $user->profile->gender == $job->gender) {
+                        $approvedUsers[] = $user;
+                    }
+                }
+                $job->users = $approvedUsers;
+                return true;
+            })->values()->filter(function ($job) {
+                // experience filter
+                $users = $job->users;
+                $approvedUsers = [];
+                foreach ($users as $user) {
+                    if (empty($user->profile->experience)) continue;
+
+                    if ($user->profile->experience >= $job->experience) {
                         $approvedUsers[] = $user;
                     }
                 }
